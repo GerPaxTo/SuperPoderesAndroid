@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -20,18 +21,14 @@ class HeroListViewModel @Inject constructor(private val repository: Repository):
     private val _state = MutableStateFlow<List<LocalHero>>(emptyList())
     val state: StateFlow<List<LocalHero>> get() = _state
 
-    private val _stateN = MutableStateFlow(0)
-
     fun getSuperheros() {
         viewModelScope.launch {
-            launch(Dispatchers.IO) {
-                val result = withContext(Dispatchers.IO) {
-                    repository.getCharacters()
-                }
-
-                _state.update { result }
+           repository.getCharacters().collect(){ heros ->
+                _state.update { heros }
+               println("Lectura ${heros.count()}")
             }
         }
+        println("Lectura $_state")
     }
 
     fun insertHero(hero: LocalHero){

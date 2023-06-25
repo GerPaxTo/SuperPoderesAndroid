@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface SuperheroDAO {
     @Query("SELECT * FROM superheros")
-    fun getAll(): List<LocalHero>
+    fun getAll(): Flow<List<LocalHero>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllVararg(vararg users: LocalHero)

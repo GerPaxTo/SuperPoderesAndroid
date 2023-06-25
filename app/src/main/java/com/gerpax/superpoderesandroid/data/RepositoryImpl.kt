@@ -18,11 +18,11 @@ class RepositoryImpl @Inject constructor(
 
     ): Repository {
 
-    override suspend fun getCharacters(): List<LocalHero> {
-        if (localDataSource.getHeros().isEmpty()) {
-            val remoteSuperheros = remoteDataSource.getCharacters()
-            localDataSource.insertHeros(remoteToLocalMapper.mapGetHeroResponse(remoteSuperheros.data!!.results))
-        }
+    override suspend fun getCharacters(): Flow<List<LocalHero>> {
+        //if (localDataSource.getHeros().count() == 0) {
+        //    val remoteSuperheros = remoteDataSource.getCharacters()
+        //    localDataSource.insertHeros(remoteToLocalMapper.mapGetHeroResponse(remoteSuperheros.data!!.results))
+        //}
         return localDataSource.getHeros()
     }
 

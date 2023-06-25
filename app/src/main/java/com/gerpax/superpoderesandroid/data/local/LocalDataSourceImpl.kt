@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(private val dao: SuperheroDAO): LocalDataSource {
 
-    override suspend fun getHeros(): List<LocalHero> {
+    override suspend fun getHeros(): Flow<List<LocalHero>> {
         return dao.getAll()
     }
 

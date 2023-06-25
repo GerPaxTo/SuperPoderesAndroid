@@ -1,13 +1,14 @@
 package com.gerpax.superpoderesandroid.data.remote
+import com.gerpax.superpoderesandroid.BuildConfig
 import com.gerpax.superpoderesandroid.model.Characters
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class DefaultRemoteDataSource @Inject constructor(private val api: MarvelApi) : RemoteDataSource {
-    private var apiKey: String = "4f3f0ecd97b20c7cb936d9206a7df955"
+    private var apiKey = BuildConfig.API_KEY
     private var ts: String  = "1"
-    private var hash: String = "36a714fe2a8b840e258070afefdb6afb"
+    private var hash: String =BuildConfig.HASH
 
 
     override suspend fun getCharacters(): Characters {
