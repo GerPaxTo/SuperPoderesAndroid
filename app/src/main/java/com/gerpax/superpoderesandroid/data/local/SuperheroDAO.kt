@@ -13,6 +13,9 @@ interface SuperheroDAO {
     @Query("SELECT * FROM superheros")
     fun getAll(): Flow<List<LocalHero>>
 
+    @Query("SELECT * FROM superheros")
+    fun getCount(): Int
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllVararg(vararg users: LocalHero)
 

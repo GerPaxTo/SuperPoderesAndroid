@@ -7,6 +7,7 @@ import com.gerpax.superpoderesandroid.data.remote.RemoteDataSource
 import com.gerpax.superpoderesandroid.model.Characters
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.count
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,10 +20,12 @@ class RepositoryImpl @Inject constructor(
     ): Repository {
 
     override suspend fun getCharacters(): Flow<List<LocalHero>> {
-        //if (localDataSource.getHeros().count() == 0) {
-        //    val remoteSuperheros = remoteDataSource.getCharacters()
-        //    localDataSource.insertHeros(remoteToLocalMapper.mapGetHeroResponse(remoteSuperheros.data!!.results))
-        //}
+        val nHeroes = localDataSource.getHeros().first()
+
+        if (nHeroes.isEmpty() ) {
+            val remoteSuperheros = remoteDataSource.getCharacters()
+            localDataSource.insertHeros(remoteToLocalMapper.mapGetHeroResponse(remoteSuperheros.data!!.results))
+        }
         return localDataSource.getHeros()
     }
 

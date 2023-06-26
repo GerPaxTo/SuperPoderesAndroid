@@ -17,18 +17,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HeroListViewModel @Inject constructor(private val repository: Repository): ViewModel() {
-
     private val _state = MutableStateFlow<List<LocalHero>>(emptyList())
     val state: StateFlow<List<LocalHero>> get() = _state
 
     fun getSuperheros() {
         viewModelScope.launch {
-           repository.getCharacters().collect(){ heros ->
+            repository.getCharacters().collect(){ heros ->
                 _state.update { heros }
-               println("Lectura ${heros.count()}")
             }
         }
-        println("Lectura $_state")
     }
 
     fun insertHero(hero: LocalHero){
